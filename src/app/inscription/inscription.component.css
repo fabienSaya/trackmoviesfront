@@ -1,0 +1,44 @@
+.block-titre {
+  display: flex;
+  align-items:center;
+}
+
+button {
+  margin: 20px 5px !important;
+}
+
+.form-group {
+  margin: 10px auto;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.block-form {
+  max-width: 500px;
+}
+
+input, textarea {
+  width: 50%;
+  border-color: black !important;
+}
+
+.action-buttons {
+  width: 100%;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+}
+
+.d-block {
+  display: block;
+  width: 80%;
+  max-width: 300px;
+}
+
+.flex-center {
+  justify-content: center !important;
+}

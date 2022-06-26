@@ -1,0 +1,37 @@
+<div class="list-container">
+  <div classe="bandeau-titre">
+    <h2 class="my-4">Ma Bibliothèque</h2>
+  </div>
+
+  <div class="block-ajout-recherche">
+    <app-searchbar></app-searchbar>
+  </div>
+
+  <button class="btn btn-warning mb-5" routerLink="/edition-oeuvre">Ajouter une oeuvre</button>
+
+  <div class="row pb-5 card-container">
+    <div *ngFor="let oeuvre of oeuvreService.oeuvres$ | async" class="col-6 col-lg-3 col-xl-2">
+      <!-- CARD-->
+      <!-- Lien navigation vers la page détail -->
+      <div [routerLink]="['/mes-oeuvres', oeuvre.id]" class="card box-shadow-white">
+        <div class="blockImg">
+          <img [src]="getUrlAffiche(oeuvre.urlAffiche)" alt="" />
+        </div>
+
+        <div class="card-body">
+          <h2 class="eltOrange">{{ oeuvre.titre | titlecase }}</h2>
+
+          <ul>
+            <li><strong>Type   : </strong>{{ oeuvre.typeOeuvre | titlecase }} </li>
+            <li><strong>Genre  : </strong><span *ngFor="let genre of oeuvre.genres">{{ genre.libelle | titlecase }} </span></li>
+            <li><strong>Statut : </strong><span *ngIf="oeuvre.statutVisionnage">{{ oeuvre.statutVisionnage.libelle }}</span></li>
+            <li><strong>Note   : </strong><span class="eltOrange" [innerHTML]="oeuvre.note | stars"></span></li>
+          </ul>
+        </div>
+
+        <!-- FIN CARD-->
+      </div>
+    </div>
+  </div>
+
+</div>

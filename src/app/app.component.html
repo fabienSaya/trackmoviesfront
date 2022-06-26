@@ -1,0 +1,41 @@
+<div class="sousBody">
+<div>
+<header class="background-secondaire">
+  <div class="blockLogo">
+    <h1 class="me-2 eltOrange">Track</h1>
+    <img src="assets\movies_logo.jpeg" alt="">
+  </div>
+
+  <div>
+  <div class="block-login">
+    <!-- <button *ngIf="!connexionUtilisateur" routerLink="/login" (click)="enregistrerTypeAction('login')" type="buttonSignIn" class="btn btn-success btn-xs m-3">Se connecter</button> -->
+    <button *ngIf="!connexionUtilisateur" routerLink="/login" type="buttonSignIn" class="btn btn-success btn-xs m-3">Se connecter</button>
+    <div class="nom-utilisateur" *ngIf="connexionUtilisateur">Bienvenue, {{ identifiantUtilisateur }}</div>
+  </div>
+
+  <div>
+    <!--<button *ngIf="!connexionUtilisateur" routerLink="/login" (click)="enregistrerTypeAction('inscription')" type="buttonSignUp" class="btn btn-success btn-xs m-3">S'inscrire</button>-->
+    <button *ngIf="!connexionUtilisateur" routerLink="/inscription" type="buttonSignUp" class="btn btn-success btn-xs m-3">S'inscrire</button>
+    <button *ngIf="connexionUtilisateur" routerLink="" (click)="logout()" type="buttonSignOut" class="btn btn-success btn-xs m-3">Se déconnecter</button>
+  </div>
+</div>
+</header>
+
+<main class="pb-5">
+  <div class="container-fluid">
+
+    <router-outlet></router-outlet>
+  </div>
+
+</main>
+</div>
+
+<footer class="background-secondaire">
+  <ul class="mt-3" >
+    <li class="my-2"><a href="mailto:contact@track-movies.com"> Contact</a></li>
+    <li class="my-2">Politique de confidentiatlité</li>
+    <li class="my-2">Qui sommes nous ?</li>
+  </ul>
+</footer>
+</div>
+

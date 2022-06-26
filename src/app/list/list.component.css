@@ -1,0 +1,64 @@
+.list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.blockSelectButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.block-ajout-recherche {
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+}
+
+.card-container {
+    width: 100%;
+}
+
+div.card {
+    background: #000000;
+    overflow: hidden;
+    border: 5px;
+    margin-bottom: 25px;
+}
+
+div.card:hover {
+  transform: scale(1.03);
+  transition-duration: 0.5s;
+  box-shadow: 1px 1px 12px rgb(255, 208, 1);
+}
+
+.blockImg{
+    height: auto;
+    overflow: hidden;
+}
+
+.blockImg img{
+    width: 100%;
+}
+
+div.card-body {      
+    height: 170px;
+}
+
+div.card-body ul{
+    list-style-type: none;
+    padding: 0;
+    font-size: 0.8rem;
+    height: 100px;
+    color: white;
+}
+
+div.card h2 {
+    font-size: 17px;
+}
+
+.button:hover {
+    background-color:rgb(255, 208, 1);
+}

@@ -1,0 +1,50 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+body {
+    color: black;
+    font-weight: 500;
+}
+html, body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+h1 {
+    margin: 30px;
+}
+
+.eltOrange {
+    color: rgb(255, 208, 1);
+}
+
+.eltBlanc {
+  color: blanc;
+}
+
+.box-shadow-white {
+    box-shadow: 1px 1px 15px white;
+    border-radius: 30px;
+    overflow: hidden;
+    margin: auto;
+}
+
+.background-primaire {
+    background: rgb(92, 112, 141);
+}
+
+.background-secondaire {
+    background-color: rgb(41, 44, 61)
+}
+
+.green-snackbar {
+    background: #d1e7dd;
+    color: black;
+}
+
+.red-snackbar {
+  background: rgb(250, 108, 108);
+}
+

@@ -1,0 +1,59 @@
+<!-- Champs de saisie recherche films -->
+<div class="blockSearch">
+  <input #userInput (change)="searchOeuvresInput(userInput.value)" (blur)="searchOeuvresInput(userInput.value)"  placeholder="Rechercher ..." class="form-control" type="text">
+  <!--<input #texteOeuvreRecherche placeholder="Rechercher une oeuvre ..." class="form-control" type="text"> -->
+</div>
+<!-- Barre de filtres -->
+<div class="filterBar m-3">
+
+  <!-- Select Type -->
+  <div class="btn-group m-3">
+    <mat-form-field appearance="fill">
+      <mat-label class = "eltOrange">Type</mat-label>
+      <mat-select [(value)]="selectionType" (selectionChange)="searchOeuvresFilter()">
+        <mat-option class = "eltBlanc" *ngFor="let type of types" [value]="type.libelle">
+          {{type.libelle | titlecase }}
+        </mat-option>
+
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Select Statut -->
+  <div class="btn-group m-3">
+    <mat-form-field appearance="fill">
+      <mat-label class = "eltOrange">Statut</mat-label>
+      <mat-select [(value)]="selectionStatut" (selectionChange)="searchOeuvresFilter()">
+<<<<<<< HEAD
+        <mat-option [value]="-1">
+          {{"Tous" | titlecase }}
+        </mat-option>
+        <mat-option *ngFor="let statut of statutService.statuts$ | async" [value]="statut.id">
+=======
+        <mat-option class = "eltBlanc" *ngFor="let statut of statutService.statuts$ | async" [value]="statut.id">
+>>>>>>> develop
+          {{statut.libelle | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Select Genre -->
+    <div class="btn-group m-3">
+      <mat-form-field appearance="fill">
+        <mat-label class = "eltOrange">Genre</mat-label>
+        <mat-select [(value)]="selectionGenre" (selectionChange)="searchOeuvresFilter()">
+<<<<<<< HEAD
+          <mat-option [value]="-1">
+            {{"Tous" | titlecase }}
+          </mat-option>
+          <mat-option *ngFor="let genre of genreService.genres$ | async" [value]="genre.id">
+=======
+          <mat-option class = "eltBlanc" *ngFor="let genre of genreService.genres$ | async" [value]="genre.id">
+>>>>>>> develop
+            {{genre.libelle | titlecase }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+</div>

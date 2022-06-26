@@ -1,0 +1,52 @@
+
+<div class="row" *ngIf="oeuvreService.oeuvreDetail$ | async as oeuvreDetail ">
+
+    <!-- Informations de l'oeuvre -->
+    <div class="col-12 col-md-8">
+        <div class="m-5" >
+
+            <div class="titlebar d-flex mb-5">
+                <button routerLink="/mes-oeuvres" class="btn btn-warning">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h2 class="mx-2">{{oeuvreDetail.titre | titlecase}}</h2>
+                <button [routerLink]="['/edition-oeuvre', oeuvreDetail.id]" type="buttonSignIn" class="btn btn-warning">Modifier</button>
+            </div>
+
+
+            <H2><span class="eltOrange">{{oeuvreDetail.typeOeuvre | titlecase}}</span></H2>
+            <p><strong>Description  : </strong>{{oeuvreDetail.description}}</p>
+            <p><strong>Genre  : </strong><span *ngFor="let genre of oeuvreDetail.genres">{{ genre.libelle | titlecase }}. </span></p>
+            <p><strong>Statut  : </strong><span *ngIf="oeuvreDetail.statutVisionnage">{{oeuvreDetail.statutVisionnage.libelle | titlecase}}</span></p>
+            <p><strong>Note  : </strong>{{oeuvreDetail.note }} <span class="eltOrange">/ 5</span> <br> <span class="eltOrange" [innerHTML]="oeuvreDetail.note | stars"></span> </p>
+            <p><strong>Créateurs  : </strong>{{oeuvreDetail.createurs}}</p>
+            <p><strong>Acteurs  : </strong>{{oeuvreDetail.acteurs}}</p>
+            <p *ngIf="oeuvreDetail.duree"><strong>Durée  : </strong>{{oeuvreDetail.duree}} minutes</p>
+            <div class="card card-body box-shadow-white background-primaire my-5" *ngIf="oeuvreDetail.saisons"> 
+                <h3><strong>Saisons</strong></h3>
+                <p class="ms-3"*ngFor="let saison of oeuvreDetail.saisons"><strong>{{saison.numero}}</strong> <span class="eltOrange"><span class="espaceSaison"> --- </span>nbr d'épisode : </span>{{saison.nbEpisodes}} <span class="espaceSaison"> --- </span><span class="eltOrange">statut :</span> {{saison.statutVisionnage.libelle}}</p>
+        
+            </div>
+        </div>
+    </div>
+
+    <!-- Affiche-->
+    <div class="col-12 col-md-4">
+        <div class="blockImg box-shadow-white m-5">
+            <img [src]="getUrlAffiche(oeuvreDetail.urlAffiche)" alt="">
+        </div>
+    </div>
+
+    <!-- Bande-Annonce-->
+    <H2  class="m-5" *ngIf="oeuvreDetail.urlBandeAnnonce">Bande-Annonce</H2>
+    <div class="col-12">
+        <div class="video-container">
+            <iframe *ngIf="oeuvreDetail.urlBandeAnnonce"
+                    [src]="getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)"
+                    width="95%"
+                    height="600px"
+                    frameborder="0"
+                    allowfullscreen></iframe>
+        </div>    
+    </div>
+</div>

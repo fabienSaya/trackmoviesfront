@@ -1,0 +1,64 @@
+.sousBody {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   height: 100vh;
+}
+
+header  {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    
+}
+
+footer {
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+footer ul {
+display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+list-style-type: none;
+color: white;
+}
+
+footer li a {
+  text-decoration: none;
+  list-style-type: none;
+  color: white;
+    }
+
+footer li a:hover {
+  text-decoration: none;
+  list-style-type: none;
+  color: rgb(255, 208, 1) !important;
+     }
+
+footer li:hover {
+    transform: scale(1.05);
+    transition-duration: 0.3s;
+    color: rgb(255, 208, 1) !important;
+    }
+
+.blockLogo img {
+width: 150px;
+}
+
+.blockLogo h1 {
+   font-size: 3.2rem;
+   font-style: italic;
+   font-family:'Times New Roman', Times, serif
+}
+
+.nom-utilisateur {
+    color:white;
+}

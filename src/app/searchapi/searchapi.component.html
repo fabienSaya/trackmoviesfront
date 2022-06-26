@@ -1,0 +1,12 @@
+<input *ngIf="oeuvreApiChoisie == false" #saisieRecherche (keyup)="rechercherOeuvreApi(saisieRecherche.value)" placeholder="Rechercher sur l'API..." class="form-control champs-recherche" type="text">
+
+<div class="selection-api box-shadow-white containerOeuvreSelectioneeApi" *ngIf="oeuvreApiChoisie == true">
+  <h4 class="my-0 oeuvreSelectioneeApi eltOrange">Oeuvre sélectionnée :</h4>
+  <p class="my-3 oeuvreSelectioneeApi">{{selectionOeuvreApi.titre}}</p>
+  <button (click)="initialiserRechercheOeuvreApi() " class="btn btn-warning">Nouvelle sélection</button>
+</div>
+
+<ul class="box-shadow-white containerListeOeuvreApi" *ngIf="oeuvresApiTrouvees.length > 0 && oeuvreApiChoisie == false">
+  <li class="OeuvreApi" (click)="selectionnerOeuvreApi(oeuvre)" *ngFor="let oeuvre of oeuvresApiTrouvees">- {{oeuvre.titre}}</li>
+</ul>
+

@@ -1,0 +1,76 @@
+
+Procédure pour le lancement de l'application "trackmovies" avec Nginx sur Windows 10
+
+
+
+1/Telechargement et installation de Nginx
+
+- télécharger la version "Stable" disponible sur le lien https://nginx.org/en/download.html
+
+- choisir le fichier "nginx/Windows-1.22.0"
+ 
+- extraire le dossier téléchargé et le placer dans le repertoire de votre choix. Nginx s'installera et s'executera à partir de cet emplacement
+
+- pour installer et exécuter Nginx il suffit de double-cliquer sur le fichier "nginx.exe"
+
+
+
+
+2/ contrôle de bon fonctionnement de Nginx
+ 
+ pour vérifier si l’installation a réussi, vous pouvez accéder à votre navigateur et taper « localhost ». 
+ vous devriez ensuite voir sur votre navigateur "Welcome to nginx!"
+ 
+
+
+
+3/ Configuration pour le lancement de l'application "trackmovies"
+
+- se rendre dans le dossier "nginx-1.22.0" précedemment téléchargé. Puis dans le dossier "conf".
+
+- Ajouter le server suivant dans la partie http{} du fichier "nginx.conf":
+
+
+    server {
+        listen       4200;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root html/track-movies;
+            index index.html index.htm;
+			try_files $uri $uri/ /index.html;
+        }
+		
+		
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+	
+       
+4/packaging de l'application
+
+- dans un terminal windows, faire un clone du repository GitHub avec la commande suivante : git clone https://github.com/OlivierBASQUIN/trackmoviesfront.git
+
+- toujours dans le terminal windows, se placer sur le répertoire "trackmoviesfront" et taper la commande "npm install" puis "ng build". Cela créera un dossier "dist" dans le répertoire "trackmoviesfront"
+		
+
+5/ Lancement de l'application "trackmovies" avec Nginx
+
+- déplacer le dossier "track-movies" présent dans le repertoire "trackmoviesfront/dist" pour le mettre dans le repertoire "nginx-1.22.0/html"
+
+- stopper le processus nginx en cours avec la commande "nginx -s stop" (en étant placé sur le dossier "nginx-1.22.0" dans le terminal) et relancer le serveur Nginx en double-cliquant sur le fichier "nginx.exe"  
+ 
+- penser à lancer l'application "trackmoviesback" (afin d'accéder au back-end), se rendre sur votre navigateur et taper « http://localhost:4200/ ». L'application "trackmovies" se lance alors.
+
+

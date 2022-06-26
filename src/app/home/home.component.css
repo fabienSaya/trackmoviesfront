@@ -1,0 +1,50 @@
+h1 {
+    text-align: center;
+    font-style: normal;
+    font-family:'Times New Roman', Times, serif;
+    font-weight: 600;
+    animation-name: bienvenue;
+    animation-duration: 4s;
+    color: rgb(0, 0, 0);
+    font-size: 2.5rem;
+    opacity: 100%;
+    margin-top: 200px;
+}
+    @keyframes bienvenue {
+        from{
+            opacity: 0;
+        }
+        to{
+            opacity: 100; 
+        }
+}
+
+.blockLogo img {
+    width: 180px;
+    opacity: 100%;
+    animation-name: bienvenue;
+    animation-duration: 5s;
+}
+
+.blockLogo h1 {
+    font-size: 3.2rem;
+    font-style: italic;
+    font-family:'Times New Roman', Times, serif;
+    color : rgb(255, 208, 1);
+    margin-left: 0;
+    font-weight: 500;
+    margin:0
+}
+
+.blockLogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

@@ -1,0 +1,238 @@
+<!--titre dynamique en fonction qu'on ajoute ou edite une oeuvre-->
+<h1 *ngIf="!oeuvreAModifier">Ajout d'une oeuvre (film/serie)</h1>
+<h1 *ngIf="oeuvreAModifier">Modification d'une oeuvre (film/serie)</h1>
+
+<app-searchapi *ngIf="!oeuvreAModifier"></app-searchapi>
+
+
+<!-- toolbar bouton du haut-->
+<div class="row">
+  <mat-toolbar class="background-primaire">
+    <mat-toolbar-row class="boite-outil">
+      <!--si edition on retourne sur la page mes-oeuvres-->
+      <button *ngIf="!oeuvreAModifier" routerLink="/mes-oeuvres"  type="button" class="btn btn-warning">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <!--si modification on retourne sur la page mes-oeuvres-detail-->
+      <button *ngIf="oeuvreAModifier" [routerLink]="['/mes-oeuvres', oeuvreAModifier.id]" type="button" class="btn btn-warning">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <button *ngIf="!oeuvreAModifier" (click)="chargeForm()" type="button" class="btn btn-warning">
+        Charger depuis l'API
+      </button>
+      <button (click)="resetForm()" type="button" class="btn btn-warning">
+        Réinitialiser
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
+<!-- fin toolbar bouton du haut-->
+
+<!-- bandeau message statut sauvegarde-->
+<div id="SuccessMsg" *ngIf="displayMsgOeuvreSauvee" class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Success!</strong> Oeuvre sauvegardée
+  <button (click)="removeMessage()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div id="ErrorMsg" *ngIf="displayMsgErreurSauvegarde" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Erreur</strong> de la sauvegarde
+  <p>{{msgErreur|json}}</p>
+  <button (click)="removeMessage()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+<!-- debut formulaire-->
+<form [formGroup]="oeuvreForm" #formDirective="ngForm" (submit)="onSubmitForm($event,formDirective)" class="my-2">
+  <div class="row border border-warning m-3 p-3">
+    <div class="col-12 col-md-6"><!--debut 1ere colonne-->
+      <!-- Type Oeuvre-->
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label class = "eltOrange">Type d'oeuvre</mat-label>
+          <mat-select formControlName="typeOeuvre" [(value)]="selectionType">
+            <mat-option class = "eltBlanc" *ngFor="let type of types" [value]="type.libelle">
+              {{type.libelle | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Titre -->
+      <div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label class = "eltOrange">Titre</mat-label>
+          <input formControlName="titre" matInput>
+        </mat-form-field>
+      </div>
+
+      <!--genres-->
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label class = "eltOrange">Genres</mat-label>
+          <mat-select formControlName="genreIds" name="values" multiple>
+            <mat-option class = "eltBlanc" *ngFor="let g of genres" [value]="g.id">
+              {{g.libelle}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!--statut visionnage-->
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label class = "eltOrange">Statut visionnage</mat-label>
+          <mat-select formControlName="statutVisionnageId" >
+            <mat-option class = "eltBlanc" *ngFor="let s of statutVisionnages" [value]="s.id">
+              {{s.libelle}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+
+
+      <!-- duree d'un film -->
+      <!-- on affiche que s'il s'agit d'un film -->
+      <div *ngIf="oeuvreForm.value.typeOeuvre =='film'" >
+        <mat-form-field appearance="fill">
+          <mat-label class = "eltOrange">Durée (en minutes)</mat-label>
+          <input matInput formControlName="duree" type="number">
+        </mat-form-field>
+      </div>
+
+      <!-- description -->
+      <div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label class = "eltOrange">Description</mat-label>
+          <textarea class = "eltBlanc" matInput formControlName="description" cdkTextareaAutosize autofocus ></textarea>
+        </mat-form-field>
+      </div>
+    </div> <!--fin 1ere colonne-->
+
+
+    <div class="col-12 col-md-6"><!--debut deuxieme colonne-->
+      <!-- Créateur -->
+      <div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label class = "eltOrange">Créateur</mat-label>
+          <input formControlName="createurs" matInput>
+        </mat-form-field>
+      </div>
+      <!-- Acteurs -->
+      <div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label class = "eltOrange">Acteurs</mat-label>
+          <input class = "eltBlanc" formControlName="acteurs" matInput>
+        </mat-form-field>
+      </div>
+      <!-- note de l'oeuvre-->
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label class = "eltOrange">Note</mat-label>
+          <mat-select formControlName="note">
+            <mat-option class = "eltBlanc" *ngFor="let note of notePossibles" [value]="note">
+              {{note}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Affiche -->
+      <div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label class = "eltOrange">Url de l'affiche</mat-label>
+          <input class = "eltBlanc" formControlName="urlAffiche" matInput>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="oeuvreForm.value.urlAffiche !=''" >
+        <div class="blockImg mb-3">
+            <img [src]="oeuvreForm.value.urlAffiche" alt="" class="w-100" >
+        </div>
+      </div>
+
+      <!-- Video youtube -->
+      <div>
+        <mat-form-field appearance="fill" class="champ-video-youtube">
+          <mat-label class = "eltOrange">Clé video youtube</mat-label>
+          <input  class = "eltBlanc" formControlName="urlBandeAnnonce" matInput placeholder="Clé Youtube remplacant ????">
+          <mat-hint>https://www.youtube.com/watch?v=????</mat-hint>
+        </mat-form-field>
+      </div>
+
+
+    </div><!-- Fin 2eme colonne-->
+  </div><!--Fin row-->
+
+  <!-- gestion des saisons -->
+  <div *ngIf="oeuvreForm.value.typeOeuvre =='serie'" class="border border-warning m-3 p-3">
+    <h2>Saisons:</h2>
+    <!--<button type="button" class="btn btn-warning" (click)="addNewSaison()">Nouvelle Saison</button>-->
+    <ng-container formArrayName="saisons">
+      <ng-container *ngFor="let saisonForm of saisons.controls; let i = index">
+        <div  [formGroupName]="i" class="row mb-3 p-1 border border-warning">
+          <div class="col-12 col-md-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label class = "eltOrange">Numéro de la saison</mat-label>
+              <input matInput class = "eltBlanc" formControlName="numero" >
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label class = "eltOrange">Nombre d'épisodes</mat-label>
+              <input class = "eltBlanc" formControlName="nbEpisodes" matInput type="number">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label class = "eltOrange">Statut visionnage</mat-label>
+              <mat-select formControlName="statutVisionnageId" >
+                <mat-option class = "eltBlanc" *ngFor="let s of statutVisionnages" [value]="s.id">
+                  {{s.libelle}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-3 text-center">
+            <mat-icon type="button" (click)="deleteSaison(i)">
+              delete_forever</mat-icon>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div class="d-flex justify-content-center">
+      <button type="button" (click)="addSaison(null)" class="btn btn-warning addSaisonBtn">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- toolbar bouton du bas-->
+  <div class="row">
+    <mat-toolbar class="background-primaire">
+      <mat-toolbar-row class="boite-outil">
+        <button type="submit" class="btn btn-warning">Sauver</button>
+
+        <!-- en fonction de si on vient de la liste ou de detail, le routage est dynamique-->
+        <button *ngIf="!oeuvreAModifier" routerLink="/mes-oeuvres"  type="button" class="btn btn-warning">
+          Annuler
+        </button>
+        <button *ngIf="oeuvreAModifier" [routerLink]="['/mes-oeuvres', oeuvreAModifier.id]"  type="button" class="btn btn-warning">
+          Annuler
+        </button>
+
+        <!-- action a coder-->
+        <button (click)="deleteOeuvre(oeuvreAModifier.id)" type="button" class="btn btn-warning">
+          Supprimer
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+  <!-- fin toolbar bouton du bas-->
+</form>
+
+<!--<pre style="background-color: white;">{{oeuvreASauverJson|json}}</pre>-->
